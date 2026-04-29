@@ -1,0 +1,21 @@
+{
+    "bot_token": "https://t.me/DKWIN_AMARCLU_HACK",
+    "admin_username": "Forhad",
+    "group_id": -1002590301424,
+    "per_refer": 4,
+    "per_prediction": 4,
+    "referral_system_on": true,
+    "admin_users": [],
+    "super_admin_users": [
+        "6678848886",
+        "7253404980"
+    ],
+    "websites": {
+        "Hgzy": {
+            "login_url": "https://hgzy.example.com"
+        },
+        "Dkwin": {
+            "login_url": "https://dkwin.example.com"
+        }
+    }
+}
