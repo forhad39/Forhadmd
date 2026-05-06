@@ -1,0 +1,20 @@
+{
+    "bot_token": "8652015124:AAEXY-lK8EGwSNs6IY0y5YflgEHxgZy_Sys",
+    "admin_username": "Forhad",
+    "group_id": -1002590301424,
+    "per_refer": 4,
+    "per_prediction": 4,
+    "referral_system_on": true,
+    "admin_users": [],
+    "super_admin_users": [
+        "6678848886"
+    ],
+    "websites": {
+        "Hgzy": {
+            "login_url": "https://hgzy.example.com"
+        },
+        "Dkwin": {
+            "login_url": "https://dkwin.example.com"
+        }
+    }
+}
