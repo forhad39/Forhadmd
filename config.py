@@ -22,7 +22,7 @@ DEFAULT_CONFIG = {
     }
 }
 DEFAULT_CHANNELS = [
-    {"name": "HACK Tool", "url":  "/t.me/+J0HJlUtfU4tiOWU1", "id": -1002863703421}
+    {"name": "HACK Tool", "url":  "https://t.me/DKWIN_AMARCLU_HACK", "id": -1002863703421}
 ]
 
 # --- Database File Paths ---
