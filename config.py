@@ -10,7 +10,7 @@ DEFAULT_SUPER_ADMIN_ID = 6678848886
 DEFAULT_CONFIG = {
     "bot_token": "8652015124:AAEQLRNKmabxTjt3DoU_Eojl1DDP5h3EFNc",
     "admin_username": "Forhad",
-    "group_id": -1002590301424,
+    "group_id": -1003261031815,
     "per_refer": 3,
     "per_prediction": 3,
     "referral_system_on": True,
