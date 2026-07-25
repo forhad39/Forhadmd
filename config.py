@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 # --- Default Settings ---
 DEFAULT_SUPER_ADMIN_ID = 6678848886
 DEFAULT_CONFIG = {
-    "bot_token": "8931393590:AAHObEnW77zUY8yrlYJ0R8xZhjFg4ZgIo5g",
+    "bot_token": "8931393590:AAEqXPnOdyQn6dz4JXgC9vboiO8Ngt-zcmU",
     "admin_username": "Forhad",
     "group_id": -1003584785202,
     "per_refer": 3,
