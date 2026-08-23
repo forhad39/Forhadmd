@@ -827,7 +827,7 @@ class TelegramBot:
             f"🔹 7 Days – ৳300\n"
             f"🔹 15 Days – ৳500\n"
             f"🔹 1 Month – ৳800\n\n"
-            f"To purchase, contact the admin @TRADERS_FAHiM, and provide your User ID: `{user_id}`\n\n"
+            f"To purchase, contact the admin @System_Fahim, and provide your User ID: `{user_id}`\n\n"
             f"Current Status: {escape_markdown('✅ Premium Active' if self.is_premium_active(user_id) else '❌ Free User', version=2)}"
         )
         
