@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 # --- Default Settings ---
 DEFAULT_SUPER_ADMIN_ID = 6678848886
 DEFAULT_CONFIG = {
-    "bot_token": "8931393590:AAEUOShvGeRDx-drj2sO9PPte1PufJG0uQw",
+    "bot_token": "8826766973:AAGwNLta4qDl6EqSi-2V_Hk_QqID58d0cCk",
     "admin_username": "Forhad",
     "group_id": -1003584785202,
     "per_refer": 3,
@@ -22,7 +22,7 @@ DEFAULT_CONFIG = {
     }
 }
 DEFAULT_CHANNELS = [
-    {"name": "HACK Tool", "url":  "https://t.me/DKWIN_AMARCLU_HACK", "id": -1002863703421}
+    {"name": "HACK Tool", "url":  "https://t.me/DKWINHACK7", "id": -1002863703421}
 ]
 
 # --- Database File Paths ---
