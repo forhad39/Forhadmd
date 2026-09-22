@@ -295,8 +295,8 @@ class TelegramBot:
             await self.show_main_menu(update, context)
 
     async def show_channels(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        keyboard = [[InlineKeyboardButton(f"📢 𝗝𝗼𝗶𝗻 {channel['name']} ›", url=channel['url'])] for channel in channels]
-        keyboard.append([InlineKeyboardButton("✅ 𝗖𝗼𝗻𝗳𝗶𝗿𝗺 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻 ›", callback_data="check_subscription")])
+        keyboard = [[InlineKeyboardButton(f"📢 Join {channel['name']}", url=channel['url'])] for channel in channels]
+        keyboard.append([InlineKeyboardButton("✅ Confirm Subscription", callback_data="check_subscription")])
         reply_markup = InlineKeyboardMarkup(keyboard)
 
         text = (
@@ -380,17 +380,17 @@ class TelegramBot:
         referral_system_on = config.get("referral_system_on", True)
         
         keyboard = [
-            [InlineKeyboardButton("📊 𝗦𝘁𝗮𝗿𝘁 𝗣𝗿𝗲𝗱𝗶𝗰𝘁𝗶𝗼𝗻 ›", callback_data="prediction_menu")],
+            [InlineKeyboardButton("📊 Start Prediction", callback_data="prediction_menu")],
         ]
         
         # Only show referral button if system is enabled
         if referral_system_on:
-            keyboard.append([InlineKeyboardButton("🔗 𝗥𝗲𝗳𝗲𝗿 & 𝗘𝗮𝗿𝗻 ›", callback_data="referral")])
+            keyboard.append([InlineKeyboardButton("🔗 Refer & Earn", callback_data="referral")])
         
         keyboard.extend([
-            [InlineKeyboardButton("👤 𝗠𝘆 𝗔𝗰𝗰𝗼𝘂𝗻𝘁 ›", callback_data="account")],
-            [InlineKeyboardButton("🔑 𝗟𝗼𝗴𝗶𝗻 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁 ›", callback_data="login_menu")],
-            [InlineKeyboardButton("🛍️ 𝗕𝘂𝘆 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻 ›", callback_data="subscription_menu")],
+            [InlineKeyboardButton("👤 My Account", callback_data="account")],
+            [InlineKeyboardButton("🔑 Login Management", callback_data="login_menu")],
+            [InlineKeyboardButton("🛍️ Buy Subscription", callback_data="subscription_menu")],
         ])
         reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -415,8 +415,8 @@ class TelegramBot:
             await query.answer(f"😔 Not enough points! You need {config['per_prediction']} points. Refer friends to earn more!", show_alert=True)
             return
 
-        keyboard = [[InlineKeyboardButton(f"✅ {website} ›", callback_data=f"prediction_{website.lower()}")] for website in config["websites"] if user_data["logged_in"][website]]
-        keyboard.append([InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")])
+        keyboard = [[InlineKeyboardButton(f"✅ {website}", callback_data=f"prediction_{website.lower()}")] for website in config["websites"] if user_data["logged_in"][website]]
+        keyboard.append([InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")])
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await query.edit_message_text(
@@ -433,8 +433,8 @@ class TelegramBot:
         save_db(users, DB_USERS)
         
         keyboard = [
-            [InlineKeyboardButton("🔢 𝗘𝗻𝘁𝗲𝗿 𝗣𝗲𝗿𝗶𝗼𝗱 𝗠𝗮𝗻𝘂𝗮𝗹𝗹𝘆 ›", callback_data="enter_period")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")]
+            [InlineKeyboardButton("🔢 Enter Period Manually", callback_data="enter_period")],
+            [InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -572,9 +572,9 @@ class TelegramBot:
         )
         
         keyboard = [
-            [InlineKeyboardButton("🚀 𝗣𝗿𝗲𝗱𝗶𝗰𝘁 𝗡𝗲𝘅𝘁 𝗣𝗲𝗿𝗶𝗼𝗱 ›", callback_data="predict_next")],
-            [InlineKeyboardButton("✍️ 𝗘𝗻𝘁𝗲𝗿 𝗡𝗲𝘄 𝗣𝗲𝗿𝗶𝗼𝗱 ›", callback_data="enter_period")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗮𝗶𝗻 𝗠𝗲𝗻𝘂", callback_data="main_menu")],
+            [InlineKeyboardButton("🚀 Predict Next Period", callback_data="predict_next")],
+            [InlineKeyboardButton("✍️ Enter New Period", callback_data="enter_period")],
+            [InlineKeyboardButton("🔙 Back to Main Menu", callback_data="main_menu")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -608,7 +608,7 @@ class TelegramBot:
                 "⚠️ The referral system is currently disabled by admin.\n\n"
                 "Please check back later or contact an admin for more information."
             )
-            keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")]]
+            keyboard = [[InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
             await update.callback_query.edit_message_text(message, reply_markup=reply_markup, parse_mode=constants.ParseMode.MARKDOWN_V2)
@@ -625,7 +625,7 @@ class TelegramBot:
             f"💰 *Points Earned:* {user_data['referrals'] * config['per_refer']}"
         )
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(message, reply_markup=reply_markup, parse_mode=constants.ParseMode.MARKDOWN_V2)
@@ -658,7 +658,7 @@ class TelegramBot:
             f"▫️ *Logged In To:* `{escape_markdown(logged_in, version=2)}`"
         )
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(message, reply_markup=reply_markup, parse_mode=constants.ParseMode.MARKDOWN_V2)
@@ -668,10 +668,10 @@ class TelegramBot:
         keyboard = []
         for website in config["websites"]:
             status = "✅ Logged In" if users[user_id]["logged_in"][website] else "❌ Not Logged In"
-            keyboard.append([InlineKeyboardButton(f"{website} ({status}) ›", callback_data=f"login_{website.lower()}")])
+            keyboard.append([InlineKeyboardButton(f"{website} ({status})", callback_data=f"login_{website.lower()}")])
 
-        keyboard.append([InlineKeyboardButton("🔐 𝗟𝗼𝗴𝗼𝘂𝘁 𝗳𝗿𝗼𝗺 𝗔𝗹𝗹 ›", callback_data="logout")])
-        keyboard.append([InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")])
+        keyboard.append([InlineKeyboardButton("🔐 Logout from All", callback_data="logout")])
+        keyboard.append([InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")])
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(
@@ -731,7 +731,7 @@ class TelegramBot:
         users[user_id]["login_info"][website] = {"number": number, "password": password}
         save_db(users, DB_USERS)
         
-        keyboard = [[InlineKeyboardButton("✅ 𝗔𝗽𝗽𝗿𝗼𝘃𝗲", callback_data=f"approve_{user_id}_{website}"), InlineKeyboardButton("❌ 𝗥𝗲𝗷𝗲𝗰𝘁", callback_data=f"reject_{user_id}_{website}")]]
+        keyboard = [[InlineKeyboardButton("✅ Approve", callback_data=f"approve_{user_id}_{website}"), InlineKeyboardButton("❌ Reject", callback_data=f"reject_{user_id}_{website}")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         escaped_user_name = escape_markdown(update.effective_user.full_name, version=2)
@@ -831,7 +831,7 @@ class TelegramBot:
             f"Current Status: {escape_markdown('✅ Premium Active' if self.is_premium_active(user_id) else '❌ Free User', version=2)}"
         )
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗠𝗲𝗻𝘂", callback_data="main_menu")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Menu", callback_data="main_menu")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(message, reply_markup=reply_markup)
@@ -1195,10 +1195,10 @@ class TelegramBot:
     async def show_user_management(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show user management options"""
         keyboard = [
-            [InlineKeyboardButton("👤 𝗩𝗶𝗲𝘄 𝗔𝗹𝗹 𝗨𝘀𝗲𝗿𝘀 ›", callback_data="admin_download_users")],
-            [InlineKeyboardButton("🚫 𝗕𝗮𝗻 𝗨𝘀𝗲𝗿 ›", callback_data="admin_ban_user")],
-            [InlineKeyboardButton("✅ 𝗨𝗻𝗯𝗮𝗻 𝗨𝘀𝗲𝗿 ›", callback_data="admin_unban_user")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("👤 View All Users", callback_data="admin_download_users")],
+            [InlineKeyboardButton("🚫 Ban User", callback_data="admin_ban_user")],
+            [InlineKeyboardButton("✅ Unban User", callback_data="admin_unban_user")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1210,10 +1210,10 @@ class TelegramBot:
     async def show_vip_management(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show VIP management options"""
         keyboard = [
-            [InlineKeyboardButton("⭐ 𝗔𝗱𝗱 𝗩𝗜𝗣 𝗨𝘀𝗲𝗿 ›", callback_data="admin_add_vip")],
-            [InlineKeyboardButton("❌ 𝗥𝗲𝗺𝗼𝘃𝗲 𝗩𝗜𝗣 𝗨𝘀𝗲𝗿 ›", callback_data="admin_remove_vip")],
-            [InlineKeyboardButton("📋 𝗩𝗶𝗲𝘄 𝗩𝗜𝗣 𝗨𝘀𝗲𝗿𝘀 ›", callback_data="admin_download_vip")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("⭐ Add VIP User", callback_data="admin_add_vip")],
+            [InlineKeyboardButton("❌ Remove VIP User", callback_data="admin_remove_vip")],
+            [InlineKeyboardButton("📋 View VIP Users", callback_data="admin_download_vip")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1226,10 +1226,10 @@ class TelegramBot:
     async def show_admin_management(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show admin management options"""
         keyboard = [
-            [InlineKeyboardButton("👨‍💼 𝗔𝗱𝗱 𝗔𝗱𝗺𝗶𝗻 ›", callback_data="admin_add_admin")],
-            [InlineKeyboardButton("❌ 𝗥𝗲𝗺𝗼𝘃𝗲 𝗔𝗱𝗺𝗶𝗻 ›", callback_data="admin_remove_admin")],
-            [InlineKeyboardButton("📋 𝗩𝗶𝗲𝘄 𝗔𝗱𝗺𝗶𝗻𝘀 ›", callback_data="admin_download_admins")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("👨‍💼 Add Admin", callback_data="admin_add_admin")],
+            [InlineKeyboardButton("❌ Remove Admin", callback_data="admin_remove_admin")],
+            [InlineKeyboardButton("📋 View Admins", callback_data="admin_download_admins")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1242,12 +1242,12 @@ class TelegramBot:
     async def show_downloads(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show download options"""
         keyboard = [
-            [InlineKeyboardButton("📊 𝗔𝗹𝗹 𝗨𝘀𝗲𝗿𝘀 𝗟𝗶𝘀𝘁 ›", callback_data="admin_download_users")],
-            [InlineKeyboardButton("🔐 𝗩𝗜𝗣 𝗨𝘀𝗲𝗿𝘀 𝗟𝗶𝘀𝘁 ›", callback_data="admin_download_vip")],
-            [InlineKeyboardButton("👨‍💼 𝗔𝗱𝗺𝗶𝗻𝘀 𝗟𝗶𝘀𝘁 ›", callback_data="admin_download_admins")],
-            [InlineKeyboardButton("📈 𝗣𝗿𝗲𝗱𝗶𝗰𝘁𝗶𝗼𝗻𝘀 𝗗𝗮𝘁𝗮 ›", callback_data="admin_download_predictions")],
-            [InlineKeyboardButton("📢 𝗖𝗵𝗮𝗻𝗻𝗲𝗹𝘀 𝗟𝗶𝘀𝘁 ›", callback_data="admin_download_channels")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("📊 All Users List", callback_data="admin_download_users")],
+            [InlineKeyboardButton("🔐 VIP Users List", callback_data="admin_download_vip")],
+            [InlineKeyboardButton("👨‍💼 Admins List", callback_data="admin_download_admins")],
+            [InlineKeyboardButton("📈 Predictions Data", callback_data="admin_download_predictions")],
+            [InlineKeyboardButton("📢 Channels List", callback_data="admin_download_channels")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1264,11 +1264,11 @@ class TelegramBot:
         status_text = "🟢 ON" if referral_system_on else "🔴 OFF"
         
         keyboard = [
-            [InlineKeyboardButton("💰 𝗦𝗲𝘁 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗣𝗼𝗶𝗻𝘁𝘀 ›", callback_data="admin_points_refer")],
-            [InlineKeyboardButton("🎯 𝗦𝗲𝘁 𝗣𝗿𝗲𝗱𝗶𝗰𝘁𝗶𝗼𝗻 𝗣𝗼𝗶𝗻𝘁𝘀 ›", callback_data="admin_points_prediction")],
-            [InlineKeyboardButton(f"🔗 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗦𝘆𝘀𝘁𝗲𝗺: {status_text} ›", callback_data="admin_toggle_referral")],
-            [InlineKeyboardButton("⚙️ 𝗩𝗶𝗲𝘄 𝗖𝘂𝗿𝗿𝗲𝗻𝘁 𝗦𝗲𝘁𝘁𝗶𝗻𝗴𝘀 ›", callback_data="admin_view_settings")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("💰 Set Referral Points", callback_data="admin_points_refer")],
+            [InlineKeyboardButton("🎯 Set Prediction Points", callback_data="admin_points_prediction")],
+            [InlineKeyboardButton(f"🔗 Referral System: {status_text}", callback_data="admin_toggle_referral")],
+            [InlineKeyboardButton("⚙️ View Current Settings", callback_data="admin_view_settings")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1280,11 +1280,11 @@ class TelegramBot:
     async def show_channel_management(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show channel management options"""
         keyboard = [
-            [InlineKeyboardButton("➕ 𝗔𝗱𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ›", callback_data="admin_channel_add")],
-            [InlineKeyboardButton("❌ 𝗥𝗲𝗺𝗼𝘃𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ›", callback_data="admin_channel_remove")],
-            [InlineKeyboardButton("✏️ 𝗘𝗱𝗶𝘁 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ›", callback_data="admin_channel_edit")],
-            [InlineKeyboardButton("📋 𝗩𝗶𝗲𝘄 𝗖𝗵𝗮𝗻𝗻𝗲𝗹𝘀 ›", callback_data="admin_download_channels")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("➕ Add Channel", callback_data="admin_channel_add")],
+            [InlineKeyboardButton("❌ Remove Channel", callback_data="admin_channel_remove")],
+            [InlineKeyboardButton("✏️ Edit Channel", callback_data="admin_channel_edit")],
+            [InlineKeyboardButton("📋 View Channels", callback_data="admin_download_channels")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1297,11 +1297,11 @@ class TelegramBot:
     async def show_data_management(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show data management options"""
         keyboard = [
-            [InlineKeyboardButton("🗑️ 𝗖𝗹𝗲𝗮𝗿 𝗔𝗹𝗹 𝗨𝘀𝗲𝗿 𝗗𝗮𝘁𝗮 ›", callback_data="admin_data_clear_users")],
-            [InlineKeyboardButton("🗑️ 𝗖𝗹𝗲𝗮𝗿 𝗣𝗿𝗲𝗱𝗶𝗰𝘁𝗶𝗼𝗻𝘀 ›", callback_data="admin_data_clear_predictions")],
-            [InlineKeyboardButton("🗑️ 𝗖𝗹𝗲𝗮𝗿 𝗔𝗹𝗹 𝗗𝗮𝘁𝗮 ›", callback_data="admin_data_clear_all")],
-            [InlineKeyboardButton("📊 𝗕𝗮𝗰𝗸𝘂𝗽 𝗗𝗮𝘁𝗮", callback_data="admin_data_backup")],
-            [InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")],
+            [InlineKeyboardButton("🗑️ Clear All User Data", callback_data="admin_data_clear_users")],
+            [InlineKeyboardButton("🗑️ Clear Predictions", callback_data="admin_data_clear_predictions")],
+            [InlineKeyboardButton("🗑️ Clear All Data", callback_data="admin_data_clear_all")],
+            [InlineKeyboardButton("📊 Backup Data", callback_data="admin_data_backup")],
+            [InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -1329,7 +1329,7 @@ class TelegramBot:
             f"📢 *Channels:* `{len(channels)}`"
         )
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗣𝗮𝗻𝗲𝗹", callback_data="admin_back")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Admin Panel", callback_data="admin_back")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(
@@ -1594,9 +1594,9 @@ class TelegramBot:
         """Show channel remove options"""
         keyboard = []
         for i, channel in enumerate(channels):
-            keyboard.append([InlineKeyboardButton(f"❌ {channel['name']} ›", callback_data=f"admin_channel_remove_{i}")])
+            keyboard.append([InlineKeyboardButton(f"❌ {channel['name']}", callback_data=f"admin_channel_remove_{i}")])
         
-        keyboard.append([InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸", callback_data="admin_channels")])
+        keyboard.append([InlineKeyboardButton("🔙 Back", callback_data="admin_channels")])
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(
@@ -1736,7 +1736,7 @@ class TelegramBot:
         users[user_id]["banned"] = True
         save_db(users, DB_USERS)
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗨𝘀𝗲𝗿 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁", callback_data="admin_users")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to User Management", callback_data="admin_users")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
@@ -1772,7 +1772,7 @@ class TelegramBot:
         users[user_id]["banned"] = False
         save_db(users, DB_USERS)
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗨𝘀𝗲𝗿 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁", callback_data="admin_users")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to User Management", callback_data="admin_users")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
@@ -1808,7 +1808,7 @@ class TelegramBot:
         users[user_id]["is_premium"] = True
         save_db(users, DB_USERS)
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗩𝗜𝗣 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁", callback_data="admin_vip")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to VIP Management", callback_data="admin_vip")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
@@ -1844,7 +1844,7 @@ class TelegramBot:
         users[user_id]["is_premium"] = False
         save_db(users, DB_USERS)
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗩𝗜𝗣 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁", callback_data="admin_vip")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to VIP Management", callback_data="admin_vip")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
@@ -1882,7 +1882,7 @@ class TelegramBot:
         config["admin_users"] = admin_users
         save_db(config, DB_CONFIG)
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁", callback_data="admin_admins")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Admin Management", callback_data="admin_admins")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
@@ -1916,7 +1916,7 @@ class TelegramBot:
         config["admin_users"] = admin_users
         save_db(config, DB_CONFIG)
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁", callback_data="admin_admins")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Admin Management", callback_data="admin_admins")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
@@ -1953,7 +1953,7 @@ class TelegramBot:
             f"🔧 Admin Users: {len(config.get('admin_users', []))}"
         )
         
-        keyboard = [[InlineKeyboardButton("‹ 𝗕𝗮𝗰𝗸 𝘁𝗼 𝗦𝗲𝘁𝘁𝗶𝗻𝗴𝘀", callback_data="admin_settings")]]
+        keyboard = [[InlineKeyboardButton("🔙 Back to Settings", callback_data="admin_settings")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.callback_query.edit_message_text(
